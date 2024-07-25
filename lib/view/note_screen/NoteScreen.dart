@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:noteapp/view/note_screen/widgets/NoteCard.dart';
 
 import '../../controller/NoteScreenController.dart';
+import 'package:intl/intl.dart';
 
 class NoteScreen extends StatefulWidget
 {
@@ -145,8 +146,8 @@ class _NoteScreenState extends State<NoteScreen> {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2030));
                             if (selectedDateTime != null) {
-                              //String formatedDate = DateFormat("yMMMMd").format(selectedDateTime);
-                              //dateController.text = formatedDate.toString();
+                              String formatedDate = DateFormat("yMMMMd").format(selectedDateTime);
+                              dateController.text = formatedDate.toString();
 
                             }
 
