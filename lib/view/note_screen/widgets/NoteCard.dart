@@ -1,72 +1,81 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:noteapp/utils/constants/colorConstants.dart';
+import 'package:share_plus/share_plus.dart';
 
-import '../../../controller/NoteScreenController.dart';
-
-class NoteCard extends StatelessWidget
-{
-  const NoteCard({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.colorIndex,
-    this.onDeletePressed,
-    this.onEditPressed});
-
+class NoteCard extends StatelessWidget {
+  const NoteCard(
+      {super.key,
+        this.onDelete,
+        required this.title,
+        required this.desc,
+        required this.date,
+        this.onEdit,
+        required this.noteColor});
+  final void Function()? onDelete;
+  final void Function()? onEdit;
   final String title;
-  final String description;
+  final String desc;
   final String date;
-  final int colorIndex;
-  final void Function()? onDeletePressed;
-  final void Function()? onEditPressed;
-
-
+  final Color noteColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 10,
+      ),
       decoration: BoxDecoration(
-          color: NoteScreenController.colorList[colorIndex],
-          borderRadius: BorderRadius.circular(12)
+        color: noteColor,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title),
-              Row(
-                children: [
-                  InkWell(onTap:onEditPressed , //onEditPressed
-                      child: Icon(Icons.edit)),
-                  SizedBox(width: 15),
-                  InkWell(onTap: onDeletePressed,// onDeletePressed
-                      child: Icon(Icons.delete))
-                ],
+              Text(
+                title,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
               ),
+              Spacer(),
+              IconButton(
+                  onPressed: onEdit,
+                  icon: Icon(Icons.edit, color: Colors.black)),
+              IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(Icons.delete, color: Colors.black)),
             ],
           ),
-          SizedBox(height: 10,),
-          Text(description),
-          SizedBox(height: 10,),
+          Text(
+            desc,
+            maxLines: 4,
+            style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.normal),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(date),
-              SizedBox(width: 20),
-              InkWell(
-                  onTap: ()
-                  {
-                    //Share.share("$title\n$des");
-
+              Text(
+                date,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal),
+              ),
+              IconButton(
+                  onPressed: () {
+                    Share.share("$title \n$desc \n$date");
                   },
-                  child: Icon(Icons.share))
+                  icon: Icon(Icons.share, color: Colors.black)),
             ],
-          )
+          ),
         ],
       ),
     );

@@ -20,7 +20,7 @@ class _SplashscreenState extends State<Splashscreen>
   void initState() {
     Future.delayed(Duration(seconds: 10))
         .then((value) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NoteScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotesScreen()));
     });
     super.initState();
   }
