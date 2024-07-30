@@ -51,6 +51,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   titleController.text = DummyDB.notesList[index]["title"]; // UI il kannikunna dataye controlleril kanikunnu
                   dateController.text = DummyDB.notesList[index]["date"];
                   descController.text = DummyDB.notesList[index]["desc"];
+                  selectedColorIndex = DummyDB.notesList[index]["colorIndex"];
                   // titleController = TextEditingController(
                   //     text: DummyDb.notesList[index]["title"]); // Another method
                   _customBottomSheet(context,
