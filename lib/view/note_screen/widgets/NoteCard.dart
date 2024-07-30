@@ -11,7 +11,7 @@ class NoteCard extends StatelessWidget {
         required this.date,
         this.onEdit,
         required this.noteColor});
-  final void Function()? onDelete;
+  final void Function()? onDelete; // cardine akathe ninne deletene listileke konde varan
   final void Function()? onEdit;
   final String title;
   final String desc;
@@ -26,7 +26,7 @@ class NoteCard extends StatelessWidget {
         vertical: 10,
       ),
       decoration: BoxDecoration(
-        color: noteColor,
+        color: noteColor, // notecardil kittunna colorine use cheyanu
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -42,9 +42,11 @@ class NoteCard extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               Spacer(),
+              // For Editing
               IconButton(
                   onPressed: onEdit,
                   icon: Icon(Icons.edit, color: Colors.black)),
+              // For Deleting
               IconButton(
                   onPressed: onDelete,
                   icon: Icon(Icons.delete, color: Colors.black)),
@@ -69,9 +71,10 @@ class NoteCard extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.normal),
               ),
+              // For Sharing
               IconButton(
                   onPressed: () {
-                    Share.share("$title \n$desc \n$date");
+                    Share.share("$title \n$desc \n$date"); // Separate data onnum kittenda aavashyam illa athondane evide viliche..
                   },
                   icon: Icon(Icons.share, color: Colors.black)),
             ],

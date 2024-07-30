@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DummyDB
 {
-  static List notesList = [];  // static vilikan ellupam aane
+  static List<Map> notesList = [];  // static vilikan ellupam aane
 
   static List<Color> noteColors = [
     Colors.red.shade300,
