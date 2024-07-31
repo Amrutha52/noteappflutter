@@ -1,7 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:noteapp/dummyDB.dart';
+import 'package:noteapp/utils/app_sessions.dart';
 import 'package:noteapp/view/note_screen/widgets/NoteCard.dart';
 
 
@@ -18,6 +20,21 @@ class _NotesScreenState extends State<NotesScreen> {
   TextEditingController descController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   int selectedColorIndex = 0; //currently selected color index kittaan
+
+  var noteBox = Hive.box(AppSessions.NOTEBOX);
+
+  List noteKeys = [];
+
+  @override
+  void initState()
+  {
+    // App open aavumbol thanne valuesne pick cheythe konde varum
+    noteKeys = noteBox.keys.toList();
+    setState(() {});
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,33 +52,36 @@ class _NotesScreenState extends State<NotesScreen> {
           ),
           body: ListView.separated(
               padding: EdgeInsets.all(15),
-              itemBuilder: (context, index) => NoteCard(
-                noteColor: DummyDB
-                    .noteColors[DummyDB.notesList[index]["colorIndex"]], // DummyDB.notesList[index]["colorIndex"] store cheytha data edukan vendiyulla code
-                date: DummyDB.notesList[index]["date"],
-                desc: DummyDB.notesList[index]["desc"],
-                title: DummyDB.notesList[index]["title"],
-                // for deletion
-                onDelete: () {
-                  DummyDB.notesList.removeAt(index);
-                  setState(() {});
-                },
-                // for editing
-                onEdit: () {
-                  titleController.text = DummyDB.notesList[index]["title"]; // UI il kannikunna dataye controlleril kanikunnu
-                  dateController.text = DummyDB.notesList[index]["date"];
-                  descController.text = DummyDB.notesList[index]["desc"];
-                  selectedColorIndex = DummyDB.notesList[index]["colorIndex"];
-                  // titleController = TextEditingController(
-                  //     text: DummyDb.notesList[index]["title"]); // Another method
-                  _customBottomSheet(context,
-                      isEdit: true, itemIndex: index); // Edit varumbol isEdit true aayitulla BottomSheetine call cheyum,
-                },
-              ),
+              itemBuilder: (context, index) {
+                var currentNote = noteBox.get(noteKeys[index]);
+                return NoteCard(
+                  noteColor: DummyDB.noteColors[currentNote["colorIndex"]], // DummyDB.notesList[index]["colorIndex"] store cheytha data edukan vendiyulla code, hive il ninne index eduthitte DummyDByile colorsil ninne edukane cheyane.
+                  date:currentNote["date"] ,
+                  desc: currentNote["desc"],
+                  title: currentNote["title"],
+                  // for deletion
+                  onDelete: () {
+                    noteBox.delete(noteKeys[index]);
+                    noteKeys = noteBox.keys.toList(); // delete cheyumbol oru key povum athonde nammude kayillulla list update cheyanam.
+                    setState(() {});
+                  },
+                  // for editing
+                  onEdit: () {
+                    titleController.text = DummyDB.notesList[index]["title"]; // UI il kannikunna dataye controlleril kanikunnu
+                    dateController.text = DummyDB.notesList[index]["date"];
+                    descController.text = DummyDB.notesList[index]["desc"];
+                    selectedColorIndex = DummyDB.notesList[index]["colorIndex"];
+                    // titleController = TextEditingController(
+                    //     text: DummyDb.notesList[index]["title"]); // Another method
+                    _customBottomSheet(context,
+                        isEdit: true, itemIndex: index); // Edit varumbol isEdit true aayitulla BottomSheetine call cheyum,
+                  },
+                );
+              },
               separatorBuilder: (context, index) => SizedBox(
                 height: 10,
               ),
-              itemCount: DummyDB.notesList.length)),
+              itemCount: noteKeys.length)),
     );
   }
 
@@ -175,13 +195,15 @@ class _NotesScreenState extends State<NotesScreen> {
                                 "date": dateController.text,
                               };
                             } else {
-                              DummyDB.notesList.add({ // Edit allenkil new add aavum.
+                              //Step 3
+                              noteBox.add({ // Edit allenkil new add aavum.
                                 "title": titleController.text,
                                 "desc": descController.text,
                                 "date": dateController.text,
                                 "colorIndex": selectedColorIndex
                               });
                             }
+                            noteKeys = noteBox.keys.toList();
                             Navigator.pop(context); // Bottom sheet closing
                             setState(() {});
                           },

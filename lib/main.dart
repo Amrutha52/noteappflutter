@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:noteapp/utils/app_sessions.dart';
 import 'package:noteapp/view/splash_screen/SplashScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async
 {
-  //await Hive.initFlutter();
- // var box = await Hive.openBox("noteBox");
+  await Hive.initFlutter(); // Initialization
+  var box = await Hive.openBox(AppSessions.NOTEBOX);
   runApp(const MyApp());
 }
 
