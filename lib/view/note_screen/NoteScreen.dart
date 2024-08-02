@@ -67,10 +67,10 @@ class _NotesScreenState extends State<NotesScreen> {
                   },
                   // for editing
                   onEdit: () {
-                    titleController.text = DummyDB.notesList[index]["title"]; // UI il kannikunna dataye controlleril kanikunnu
-                    dateController.text = DummyDB.notesList[index]["date"];
-                    descController.text = DummyDB.notesList[index]["desc"];
-                    selectedColorIndex = DummyDB.notesList[index]["colorIndex"];
+                    titleController.text = currentNote["title"]; // UI il kannikunna dataye controlleril kanikunnu
+                    dateController.text = currentNote["date"]; // Hiveil ninne edukunnu
+                    descController.text = currentNote["desc"];
+                    selectedColorIndex = currentNote["colorIndex"];
                     // titleController = TextEditingController(
                     //     text: DummyDb.notesList[index]["title"]); // Another method
                     _customBottomSheet(context,
