@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/intl.dart';
 import 'package:noteapp/dummyDB.dart';
 import 'package:noteapp/utils/app_sessions.dart';
 import 'package:noteapp/view/note_screen/widgets/NoteCard.dart';
@@ -122,11 +123,23 @@ class _NotesScreenState extends State<NotesScreen> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    readOnly: true, // to avoid textfield typeing
                     controller: dateController,
                     decoration: InputDecoration(
                         hintText: "Date",
                         filled: true,
                         fillColor: Colors.grey.shade300,
+                        suffixIcon: IconButton(onPressed: () async {
+                          var selectedDate = await showDatePicker(context: context,
+                              firstDate: DateTime(2024),
+                              lastDate: DateTime.now());
+                          if(selectedDate != null)
+                            {
+                              dateController.text = DateFormat("dd MMM yyyy").format(selectedDate);
+                            }
+
+                        },
+                            icon: Icon(Icons.calendar_month)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
