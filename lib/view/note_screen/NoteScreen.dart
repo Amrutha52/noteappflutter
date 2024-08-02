@@ -188,12 +188,19 @@ class _NotesScreenState extends State<NotesScreen> {
                         child: InkWell(
                           onTap: () {
                             if (isEdit == true) {
-                              DummyDB.notesList[itemIndex!] = {  // item indexileke puthiya mapine add cheyanam, epo controllerileke ulla values aa particular indexileke add aavum.
-                                "title": titleController.text,
-                                "desc": descController.text,
-                                "colorIndex": selectedColorIndex,
-                                "date": dateController.text,
-                              };
+                            noteBox.put(noteKeys[itemIndex!],{
+                              "title": titleController.text,
+                              "desc": descController.text,
+                              "colorIndex": selectedColorIndex,
+                              "date": dateController.text,
+                            });
+                              // DummyDB.notesList[itemIndex!] = {  // item indexileke puthiya mapine add cheyanam, epo controllerileke ulla values aa particular indexileke add aavum.
+                              //   "title": titleController.text,
+                              //   "desc": descController.text,
+                              //   "colorIndex": selectedColorIndex,
+                              //   "date": dateController.text,
+                              // };
+
                             } else {
                               //Step 3
                               noteBox.add({ // Edit allenkil new add aavum.
