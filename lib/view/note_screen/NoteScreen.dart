@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:noteapp/dummyDB.dart';
 import 'package:noteapp/utils/app_sessions.dart';
 import 'package:noteapp/view/note_screen/widgets/NoteCard.dart';
+import 'package:noteapp/view/notedetails_screen/NoteDetailsScreen.dart';
 
 
 class NotesScreen extends StatefulWidget
@@ -40,6 +41,7 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.blueGrey.shade700,
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.grey.shade300,
             onPressed: () {
@@ -55,28 +57,38 @@ class _NotesScreenState extends State<NotesScreen> {
               padding: EdgeInsets.all(15),
               itemBuilder: (context, index) {
                 var currentNote = noteBox.get(noteKeys[index]);
-                return NoteCard(
-                  noteColor: DummyDB.noteColors[currentNote["colorIndex"]], // DummyDB.notesList[index]["colorIndex"] store cheytha data edukan vendiyulla code, hive il ninne index eduthitte DummyDByile colorsil ninne edukane cheyane.
-                  date:currentNote["date"] ,
-                  desc: currentNote["desc"],
-                  title: currentNote["title"],
-                  // for deletion
-                  onDelete: () {
-                    noteBox.delete(noteKeys[index]);
-                    noteKeys = noteBox.keys.toList(); // delete cheyumbol oru key povum athonde nammude kayillulla list update cheyanam.
-                    setState(() {});
+                return InkWell(
+                  onTap: ()
+                  {
+                    //Sending Details to the NoteDetails Screen
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NoteDetailsScreen(currentNoteDesc: currentNote["desc"],
+                      title: currentNote["title"],
+                      date: currentNote["date"],
+                      noteColor: DummyDB.noteColors[currentNote["colorIndex"]],)));
                   },
-                  // for editing
-                  onEdit: () {
-                    titleController.text = currentNote["title"]; // UI il kannikunna dataye controlleril kanikunnu
-                    dateController.text = currentNote["date"]; // Hiveil ninne edukunnu
-                    descController.text = currentNote["desc"];
-                    selectedColorIndex = currentNote["colorIndex"];
-                    // titleController = TextEditingController(
-                    //     text: DummyDb.notesList[index]["title"]); // Another method
-                    _customBottomSheet(context,
-                        isEdit: true, itemIndex: index); // Edit varumbol isEdit true aayitulla BottomSheetine call cheyum,
-                  },
+                  child: NoteCard(
+                    noteColor: DummyDB.noteColors[currentNote["colorIndex"]], // DummyDB.notesList[index]["colorIndex"] store cheytha data edukan vendiyulla code, hive il ninne index eduthitte DummyDByile colorsil ninne edukane cheyane.
+                    date:currentNote["date"] ,
+                    desc: currentNote["desc"],
+                    title: currentNote["title"],
+                    // for deletion
+                    onDelete: () {
+                      noteBox.delete(noteKeys[index]);
+                      noteKeys = noteBox.keys.toList(); // delete cheyumbol oru key povum athonde nammude kayillulla list update cheyanam.
+                      setState(() {});
+                    },
+                    // for editing
+                    onEdit: () {
+                      titleController.text = currentNote["title"]; // UI il kannikunna dataye controlleril kanikunnu
+                      dateController.text = currentNote["date"]; // Hiveil ninne edukunnu
+                      descController.text = currentNote["desc"];
+                      selectedColorIndex = currentNote["colorIndex"];
+                      // titleController = TextEditingController(
+                      //     text: DummyDb.notesList[index]["title"]); // Another method
+                      _customBottomSheet(context,
+                          isEdit: true, itemIndex: index); // Edit varumbol isEdit true aayitulla BottomSheetine call cheyum,
+                    },
+                  ),
                 );
               },
               separatorBuilder: (context, index) => SizedBox(

@@ -1,6 +1,6 @@
 class imageConstants
 {
   //Splash screen Images
-  //static const String LOGO_PNG = "assets/images/logo.png";
+  static const String CARD_BG_PNG = "assets/images/fabric.png";
 
 }

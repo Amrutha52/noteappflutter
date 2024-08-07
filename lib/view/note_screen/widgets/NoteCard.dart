@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:noteapp/utils/constants/imageConstants.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NoteCard extends StatelessWidget {
@@ -26,6 +27,10 @@ class NoteCard extends StatelessWidget {
         vertical: 10,
       ),
       decoration: BoxDecoration(
+        // image: DecorationImage(image: AssetImage(imageConstants.CARD_BG_PNG,
+        // ),
+        // fit: BoxFit.cover
+        // ),
         color: noteColor, // notecardil kittunna colorine use cheyanu
         borderRadius: BorderRadius.circular(20),
       ),

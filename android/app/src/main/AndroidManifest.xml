@@ -2,7 +2,7 @@
     <application
         android:label="noteapp"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/notes">
         <activity
             android:name=".MainActivity"
             android:exported="true"
