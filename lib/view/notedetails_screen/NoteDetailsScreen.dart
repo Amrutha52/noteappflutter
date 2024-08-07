@@ -62,6 +62,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
             SizedBox(height: 10,),
             Text(
               currentNoteDesc,
+              maxLines: 1000,
               style: TextStyle(
                   overflow: TextOverflow.ellipsis,
                   color: Colors.black,
