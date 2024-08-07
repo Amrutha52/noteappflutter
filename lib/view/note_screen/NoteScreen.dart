@@ -135,7 +135,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    readOnly: true, // to avoid textfield typeing
+                    readOnly: true, // to avoid textfield typing
                     controller: dateController,
                     decoration: InputDecoration(
                         hintText: "Date",

@@ -39,6 +39,16 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
 
     return Scaffold(
       backgroundColor: noteColor,
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        title: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Container(
         height: screenHeight,
         width: screenWidth,
@@ -50,16 +60,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: 10,),
+
             Text(
               currentNoteDesc,
               maxLines: 1000,
